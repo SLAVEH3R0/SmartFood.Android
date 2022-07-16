@@ -1,4 +1,6 @@
-import 'category.dart';
+//import 'category.dart';
+
+import 'package:smartfood/models/category.dart';
 
 class Recipe {
   final String id;
@@ -20,4 +22,16 @@ class Recipe {
     required this.category,
     required this.photo,
   });
+
+  factory Recipe.fromJson(Map<String, dynamic> json) {
+    return Recipe(
+        id: json['id'],
+        name: json['name'],
+        preparationTime: json['preparationTime'],
+        servings: json['servings'],
+        ingredients: json['ingredients'],
+        description: json['description'],
+        category: Category.fromJson(json['category']),
+        photo: json['photo']);
+  }
 }
