@@ -3,16 +3,16 @@
 import 'package:smartfood/models/category.dart';
 
 class Recipe {
-  final String id;
-  final String name;
-  final int preparationTime;
-  final int servings;
-  final String ingredients;
-  final String description;
-  final Category category;
-  final String photo;
+  String id;
+  String name;
+  int preparationTime;
+  int servings;
+  String ingredients;
+  String description;
+  Category category;
+  String photo;
 
-  const Recipe({
+  Recipe({
     required this.id,
     required this.name,
     required this.preparationTime,
@@ -34,4 +34,15 @@ class Recipe {
         category: Category.fromJson(json['category']),
         photo: json['photo']);
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'preparationTime': preparationTime,
+        'servings': servings,
+        'ingredients': ingredients,
+        'description': description,
+        'category': category.toJson(),
+        'photo': photo
+      };
 }
