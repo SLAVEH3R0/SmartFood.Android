@@ -1,6 +1,4 @@
-//import 'category.dart';
-
-import 'package:smartfood/models/category.dart';
+import 'category.dart';
 
 class Recipe {
   String id;
@@ -23,20 +21,17 @@ class Recipe {
     required this.photo,
   });
 
-  factory Recipe.fromJson(Map<String, dynamic> json) {
-    return Recipe(
-        id: json['id'],
-        name: json['name'],
-        preparationTime: json['preparationTime'],
-        servings: json['servings'],
-        ingredients: json['ingredients'],
-        description: json['description'],
-        category: Category.fromJson(json['category']),
-        photo: json['photo']);
-  }
+  factory Recipe.fromJson(Map<String, dynamic> json) => Recipe(
+      id: json['id'],
+      name: json['name'],
+      preparationTime: json['preparationTime'],
+      servings: json['servings'],
+      ingredients: json['ingredients'],
+      description: json['description'],
+      category: Category.fromJson(json['category']),
+      photo: json['photo']);
 
   Map<String, dynamic> toJson() => {
-        'id': id,
         'name': name,
         'preparationTime': preparationTime,
         'servings': servings,

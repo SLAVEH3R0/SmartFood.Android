@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:smartfood/config/constants.dart';
 import 'package:smartfood/models/recipe.dart';
 import 'package:smartfood/views/recipe_form_view.dart';
 import 'package:smartfood/views/recipe_view.dart';
@@ -24,7 +25,7 @@ class RecipesView extends StatefulWidget {
 }*/
 
 Future<List<Recipe>> fetchRecipes() async {
-  final url = Uri.parse('https://smartfood-api.azurewebsites.net/api/recipes');
+  final url = Uri.https(APP_API_URL, '/api/recipes');
   final response = await http.get(url);
 
   if (response.statusCode == 200) {
@@ -45,9 +46,26 @@ class _RecipesViewState extends State<RecipesView> {
   }
 
   void _goToForm() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return const RecipeFormView();
-    }));
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) {
+        return const RecipeFormView();
+      })
+    );
+  }
+
+  void deleteRecipe(String id) async {
+    print("deleteRecipe, $id");
+
+    final url = Uri.https(APP_API_URL, '/api/recipes/$id');
+    final response = await http.delete(url);
+
+    if (response.statusCode == 204) {
+      setState(() {
+        recipes.then((liste) => liste.removeWhere((element) => element.id == id));
+      });
+    } else {
+      throw Exception('Failed to delete recipes');
+    }
   }
 
   @override
@@ -62,8 +80,10 @@ class _RecipesViewState extends State<RecipesView> {
             if (snapshot.hasData) {
               return ListView(
                   children: snapshot.data!
-                      .map((Recipe recipe) => RecipeView(recipe: recipe))
-                      .toList());
+                      .toList()
+                      .map((Recipe recipe) => RecipeView(recipe: recipe, deleteAction: deleteRecipe))
+                      .toList()
+              );
             }
             return const Center(child: CircularProgressIndicator());
           }),
