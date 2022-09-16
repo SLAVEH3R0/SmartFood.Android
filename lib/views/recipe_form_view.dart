@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:smartfood/config/constants.dart';
 import 'package:smartfood/models/category.dart';
 import 'package:smartfood/models/recipe.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RecipeFormView extends StatefulWidget {
   const RecipeFormView({Key? key}) : super(key: key);
@@ -81,6 +82,8 @@ class _RecipeFormViewState extends State<RecipeFormView> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Add Recipe')),
       body: SingleChildScrollView(
@@ -93,9 +96,9 @@ class _RecipeFormViewState extends State<RecipeFormView> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 15.0),
                   child: TextFormField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Name',
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: t.name,
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
